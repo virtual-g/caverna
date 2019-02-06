@@ -1,0 +1,14 @@
+{
+  "name": "caverna",
+  "version": "0.0.1",
+  "description": "Caverna Board Game",
+  "private": true,
+  "dependencies": {
+    "aws-sdk": "^2.382.0",
+    "serverless-websockets-plugin": "^1.0.0",
+    "sanitize-html": "^1.20.0"
+  },
+  "devDependencies": {
+    
+  }
+}

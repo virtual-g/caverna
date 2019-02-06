@@ -1,0 +1,71 @@
+{
+    "headers": {
+        "Host": "e8n9ravuvg.execute-api.us-west-1.amazonaws.com",
+        "Sec-WebSocket-Extensions": "permessage-deflate; client_max_window_bits",
+        "Sec-WebSocket-Key": "G4OlJpMsPNPomFhC6Ie0pw==",
+        "Sec-WebSocket-Version": "13",
+        "X-Amzn-Trace-Id": "Root=1-5c5a282a-2cab3bd45e9a2268beb681e4",
+        "X-Forwarded-For": "67.164.99.90",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Host": [
+            "e8n9ravuvg.execute-api.us-west-1.amazonaws.com"
+        ],
+        "Sec-WebSocket-Extensions": [
+            "permessage-deflate; client_max_window_bits"
+        ],
+        "Sec-WebSocket-Key": [
+            "G4OlJpMsPNPomFhC6Ie0pw=="
+        ],
+        "Sec-WebSocket-Version": [
+            "13"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-5c5a282a-2cab3bd45e9a2268beb681e4"
+        ],
+        "X-Forwarded-For": [
+            "67.164.99.90"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "requestContext": {
+        "routeKey": "$connect",
+        "authorizer": "",
+        "messageId": null,
+        "integrationLatency": "",
+        "eventType": "CONNECT",
+        "error": "",
+        "extendedRequestId": "Ups2sE5ByK4FnKw=",
+        "requestTime": "06/Feb/2019:00:19:54 +0000",
+        "messageDirection": "IN",
+        "stage": "dev",
+        "connectedAt": 1549412394823,
+        "requestTimeEpoch": 1549412394827,
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "67.164.99.90",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": null,
+            "user": null
+        },
+        "requestId": "Ups2sE5ByK4FnKw=",
+        "domainName": "e8n9ravuvg.execute-api.us-west-1.amazonaws.com",
+        "connectionId": "Ups2scxCSK4CILA=",
+        "apiId": "e8n9ravuvg",
+        "status": ""
+    },
+    "isBase64Encoded": false
+}
