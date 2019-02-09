@@ -1,9 +1,8 @@
-service: caverna
+service: caverna-sockets
 provider:
   name: aws
   runtime: nodejs8.10
   stackName: ${self:service}-${self:provider.stage}
-  stage: ${opt:stage, 'dev'}
   region: ${opt:region, 'us-west-1'}
   iamRoleStatements:
     - Effect: Allow
@@ -22,25 +21,44 @@ provider:
         - "dynamodb:Query"
         - "dynamodb:Scan"
       Resource:
+        - Fn::GetAtt: [LobbiesTable, Arn]
+        - Fn::Join:
+            - '/'
+            - - Fn::GetAtt: [LobbiesTable, Arn]
+              - '*'
         - Fn::GetAtt: [ConnectionsTable, Arn]
         - Fn::Join:
             - '/'
             - - Fn::GetAtt: [ConnectionsTable, Arn]
               - '*'
+        - Fn::GetAtt: [GamesTable, Arn]
+        - Fn::Join:
+            - '/'
+            - - Fn::GetAtt: [GamesTable, Arn]
+              - '*'
+
   environment:
     CONNECTIONS_TABLE:
       Ref: ConnectionsTable
-    API_REGION: "${self:provider.region}"
-    ENDPOINT: "https://e8n9ravuvg.execute-api.us-west-1.amazonaws.com/dev"
+    LOBBIES_TABLE:
+      Ref: LobbiesTable
+    GAMES_TABLE:
+      Ref: GamesTable
+    ENDPOINT: "https://9w0jkjciw8.execute-api.us-west-1.amazonaws.com/dev"
 
   # optional
-  websocketApiName: caverna-${self:provider.stage}
+  websocketApiName: caverna-sockets-api-${self:provider.stage}
 
   # required for websocket apis
   # this selects from your payload what your "routeKey" parameter is
   # from the websocket event types on your function
   websocketApiRouteSelectionExpression: $request.body.action
 
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  connectionsTable: Caverna-Connections-${self:custom.stage}
+  lobbiesTable: Caverna-Lobbies-${self:custom.stage}
+  gamesTable: Caverna-Games-${self:custom.stage}
 
 plugins:
   - serverless-websockets-plugin
@@ -72,14 +90,41 @@ functions:
 
 resources:
   Resources:
+    LobbiesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.lobbiesTable}
+        AttributeDefinitions:
+          - AttributeName: lobbyId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: lobbyId
+            KeyType: HASH
+        ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
     ConnectionsTable:
       Type: AWS::DynamoDB::Table
       Properties:
+        TableName: ${self:custom.connectionsTable}
         AttributeDefinitions:
           - AttributeName: connectionId
             AttributeType: S
         KeySchema:
           - AttributeName: connectionId
+            KeyType: HASH
+        ProvisionedThroughput:
+            ReadCapacityUnits: 5
+            WriteCapacityUnits: 5
+    GamesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.gamesTable}
+        AttributeDefinitions:
+          - AttributeName: gameId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: gameId
             KeyType: HASH
         ProvisionedThroughput:
             ReadCapacityUnits: 5

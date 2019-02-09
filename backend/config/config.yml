@@ -1,0 +1,7 @@
+dev:
+  env:
+    ENDPOINT: https://e8n9ravuvg.execute-api.us-west-1.amazonaws.com/dev
+
+prod:
+  env:
+    ENDPOINT: cerca-test.cluster-c663v0ec60ir.us-east-2.rds.amazonaws.com

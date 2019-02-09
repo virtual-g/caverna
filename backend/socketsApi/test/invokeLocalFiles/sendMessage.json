@@ -1,0 +1,36 @@
+{
+    "requestContext": {
+        "routeKey": "sendMessage",
+        "authorizer": "",
+        "messageId": "UsoAPfUuSK4CHCw=",
+        "integrationLatency": "",
+        "eventType": "MESSAGE",
+        "error": "",
+        "extendedRequestId": "UsoAPE7oSK4FUVQ=",
+        "requestTime": "06/Feb/2019:21:37:31 +0000",
+        "messageDirection": "IN",
+        "stage": "dev",
+        "connectedAt": 1549489036672,
+        "requestTimeEpoch": 1549489051159,
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "67.164.99.90",
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": null,
+            "user": null
+        },
+        "requestId": "UsoAPE7oSK4FUVQ=",
+        "domainName": "e8n9ravuvg.execute-api.us-west-1.amazonaws.com",
+        "connectionId": "Usn9-fT8SK4CHCw=",
+        "apiId": "e8n9ravuvg",
+        "status": ""
+    },
+    "body": "{\"action\": \"sendMessage\", \"name\": \"Greg2\", \"data\":\"general kenobi!\"}",
+    "isBase64Encoded": false
+}
