@@ -21,10 +21,10 @@ provider:
         - "dynamodb:Query"
         - "dynamodb:Scan"
       Resource:
-        - Fn::GetAtt: [LobbiesTable, Arn]
+        - Fn::GetAtt: [TablesTable, Arn]
         - Fn::Join:
             - '/'
-            - - Fn::GetAtt: [LobbiesTable, Arn]
+            - - Fn::GetAtt: [TablesTable, Arn]
               - '*'
         - Fn::GetAtt: [ConnectionsTable, Arn]
         - Fn::Join:
@@ -40,8 +40,8 @@ provider:
   environment:
     CONNECTIONS_TABLE:
       Ref: ConnectionsTable
-    LOBBIES_TABLE:
-      Ref: LobbiesTable
+    TABLES_TABLE:
+      Ref: TablesTable
     GAMES_TABLE:
       Ref: GamesTable
     ENDPOINT: "https://9w0jkjciw8.execute-api.us-west-1.amazonaws.com/dev"
@@ -57,7 +57,7 @@ provider:
 custom:
   stage: ${opt:stage, self:provider.stage}
   connectionsTable: Caverna-Connections-${self:custom.stage}
-  lobbiesTable: Caverna-Lobbies-${self:custom.stage}
+  tablesTable: Caverna-Tables-${self:custom.stage}
   gamesTable: Caverna-Games-${self:custom.stage}
 
 plugins:
@@ -66,7 +66,7 @@ plugins:
 functions:
   # manage connection and disconnection of clients
   connectionManager:
-    handler: src/handler.connectionManager
+    handler: src/connectionHandler.connectionManager
     events:
       - websocket:
           routeKey: $connect
@@ -76,29 +76,50 @@ functions:
   # just in case we are getting weird / bad data
   # we can react to it with a sane resposne
   defaultMessages:
-    handler: src/handler.defaultMessage
+    handler: src/messageHandler.defaultMessage
     events:
       - websocket:
           routeKey: $default
 
   # handle chat app messages
-  sendMessage:
-    handler: src/handler.sendMessage
+  chatMessage:
+    handler: src/messageHandler.chatMessage
     events:
       - websocket:
-          routeKey: sendMessage
+          routeKey: chatMessage
+
+  # player joined the table messages
+  playerJoinMessage:
+    handler: src/messageHandler.playerJoinMessage
+    events:
+      - websocket:
+          routeKey: playerJoinMessage
+
+  # start game messages
+  startGameMessage:
+    handler: src/messageHandler.startGameMessage
+    events:
+      - websocket:
+          routeKey: startGameMessage
+
+  # end game messages
+  endGameMessage:
+    handler: src/messageHandler.endGameMessage
+    events:
+      - websocket:
+          routeKey: endGameMessage
 
 resources:
   Resources:
-    LobbiesTable:
+    TablesTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: ${self:custom.lobbiesTable}
+        TableName: ${self:custom.tablesTable}
         AttributeDefinitions:
-          - AttributeName: lobbyId
+          - AttributeName: tableId
             AttributeType: S
         KeySchema:
-          - AttributeName: lobbyId
+          - AttributeName: tableId
             KeyType: HASH
         ProvisionedThroughput:
             ReadCapacityUnits: 5
